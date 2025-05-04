@@ -1,0 +1,25 @@
+model:
+  vocab_size: 32128            # Size of the vocabulary (number of unique tokens)
+  d_model: 768                 # Embedding dimension and hidden size of the transformer
+  num_heads: 12                # Number of attention heads in multi-head self-attention
+  num_layers: 12               # Total number of transformer layers (encoder blocks)
+  d_ff: 2048                   # Hidden dimension of the feedforward network in each transformer layer
+  num_experts: 64              # Number of experts in the Mixture of Experts (MoE) layer
+  dropout: 0.1                 # Dropout probability applied in transformer layers (regularization)
+  expert_dropout: 0.1          # Dropout applied before/after expert routing (specific to MoE layers)
+  aux_loss_alpha: 0.01         # Weight for the auxiliary load balancing loss in MoE
+  capacity_factor: 1           # Over-provisioning factor for routing tokens to experts (used to compute expert capacity)
+
+training:
+  batch_size: 64               # Number of samples per training batch
+  max_seq_length: 512          # Maximum length of input sequences (in tokens)
+  learning_rate: 5e-5          # Initial learning rate for the optimizer
+  max_steps: 10000             # Total number of training steps
+  log_interval: 200            # Frequency (in steps) to log training metrics
+  eval_interval: 1000          # Frequency (in steps) to run evaluation on validation data
+  num_workers: 8               # Number of data loading workers (used by DataLoader)
+  grad_accum_steps: 1          # Number of gradient accumulation steps (effective batch size = batch_size * grad_accum_steps)
+  dataset_fraction: 0.1        # Fraction of the full dataset used for training (e.g., 10%)
+  val_fraction: 0.1            # Fraction of the dataset reserved for validation
+
+model_name: Switch-B-ExpertLoad-64Experts  # Identifier for the model configuration/run (used in logging or saving)
